@@ -45,6 +45,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnSaveImage = new System.Windows.Forms.Button();
             this.btnInvert = new System.Windows.Forms.Button();
+            this.ckbSave = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAlpha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRed)).BeginInit();
@@ -196,11 +197,21 @@
             this.btnInvert.UseVisualStyleBackColor = true;
             this.btnInvert.Click += new System.EventHandler(this.btnInvert_Click);
             // 
+            // ckbSave
+            // 
+            this.ckbSave.Location = new System.Drawing.Point(727, 341);
+            this.ckbSave.Name = "ckbSave";
+            this.ckbSave.Size = new System.Drawing.Size(110, 24);
+            this.ckbSave.TabIndex = 18;
+            this.ckbSave.Text = "Save as *.txt";
+            this.ckbSave.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 440);
+            this.Controls.Add(this.ckbSave);
             this.Controls.Add(this.btnInvert);
             this.Controls.Add(this.btnSaveImage);
             this.Controls.Add(this.label5);
@@ -245,6 +256,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button btnSaveImage;
         private System.Windows.Forms.Button btnInvert;
+        private System.Windows.Forms.CheckBox ckbSave;
     }
 }
 

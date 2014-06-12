@@ -19,7 +19,7 @@ namespace Image_Processing
 {
     public class ImageProcessor
     {
-        public Bitmap Rendering(string bmpPath, byte _Alpha, byte _Red, byte _Green, byte _Blue)
+        public Bitmap Rendering(string bmpPath, byte _Alpha, byte _Red, byte _Green, byte _Blue, bool Out)
         {
             /// <summary>
             /// This function is the "heart" of the program. It get's the pixels via LockBits, manipulates them
@@ -27,9 +27,7 @@ namespace Image_Processing
             /// I have tested a 3987x2459 and it rendered in less than a second, so it is very fast.
             /// </summary>
 
-
             string PathWay = Path.GetDirectoryName(bmpPath) + "\\" + Path.GetFileNameWithoutExtension(bmpPath) + ".txt";
-
 
             Bitmap imageFile = new Bitmap(bmpPath);
 
@@ -56,9 +54,7 @@ namespace Image_Processing
             byte NewGreen;
             byte NewBlue;
 
-            DialogResult MsgYesNo = MessageBox.Show("Save all the pixels to a text file?. Warning, if you chose to save, it will take about a minute or two depending on file size. The file will be located wherever the image you import was.", "Save", MessageBoxButtons.YesNo);
-
-            StreamWriter TextWriter = TextWriter = new StreamWriter(PathWay);
+            StreamWriter Save = new StreamWriter(PathWay);
 
             unsafe
             {
@@ -80,7 +76,7 @@ namespace Image_Processing
                         byte alpha = row[offSet + 3];
 
                         //Manipulates pixel
-                        NewAlpha = (byte)Math.Abs(alpha - _Alpha);
+                        NewAlpha = (byte)Math.Abs(alpha - _Alpha); //Do not work
                         NewRed = (byte)Math.Abs(red - _Red);
                         NewBlue = (byte)Math.Abs(blue - _Blue);
                         NewGreen = (byte)Math.Abs(green - _Green);
@@ -93,18 +89,38 @@ namespace Image_Processing
 
                         ArGBformat = Color.FromArgb(NewAlpha, NewRed, NewGreen, NewBlue);
 
-                        if (MsgYesNo == DialogResult.Yes)
-                        {
+                       
 
-                            TextWriter.Write(ArGBformat);
+                        if (Out)
+                        {
+                            byte[] ConvertToByte = GetBytes(ArGBformat.ToString());
+                            string ConvertToString = GetString(ConvertToByte);
+                            Save.Write(ConvertToString);
                         }
                     }
                 }
-                TextWriter.Flush();
-                TextWriter.Dispose();
+
+                Save.Flush();
+                Save.Dispose();
+
                 imageFile.UnlockBits(imageData);
                 return imageFile;
             }
         }
+
+        static byte[] GetBytes(string str)
+        {
+            byte[] bytes = new byte[str.Length * sizeof(char)];
+            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            return bytes;
+        }
+
+        static string GetString(byte[] bytes)
+        {
+            char[] chars = new char[bytes.Length / sizeof(char)];
+            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            return new string(chars);
+        }
+
     }
 }

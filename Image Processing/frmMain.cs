@@ -18,12 +18,21 @@ namespace Image_Processing
 {
     public partial class frmMain : Form
     {
+
         string bmpPath;
+
         bool Invert = false;
+
         ImageProcessor Render = new ImageProcessor();
+
         public frmMain()
         {
             InitializeComponent();
+
+            toolTip1.ToolTipIcon = ToolTipIcon.Info;
+
+            toolTip1.SetToolTip(this.ckbSave, "This function will save the rendered image as a text file. Caution - slows down performance.");
+
         }
 
         private void btnGetPath_Click(object sender, EventArgs e)
@@ -38,7 +47,7 @@ namespace Image_Processing
 
         private void btnRender_Click(object sender, EventArgs e)
         {
-            pictureBox1.Image = Render.Rendering(bmpPath, (byte)nudAlpha.Value, (byte)nudRed.Value, (byte)nudGreen.Value, (byte)nudBlue.Value);
+            pictureBox1.Image = Render.Rendering(bmpPath, (byte)nudAlpha.Value, (byte)nudRed.Value, (byte)nudGreen.Value, (byte)nudBlue.Value, ckbSave.Checked);
             btnSaveImage.Enabled = true;
         }
 
